@@ -1,6 +1,6 @@
 # Solicitud de Medicamentos
 
-App full stack para gestionar solicitudes de medicamentos (POS y NO POS). Backend en FastAPI, front en React, MySQL de base. Sale de una prueba técnica; está armada en capas, con auth aparte y JWT.
+App full stack para gestionar solicitudes de medicamentos (POS y NO POS). Backend en FastAPI, front en React, MySQL de base. Sale de una prueba técnica; está organizada en capas, con auth aparte y JWT.
 
 ---
 
@@ -10,7 +10,7 @@ App full stack para gestionar solicitudes de medicamentos (POS y NO POS). Backen
 - **frontend/** — React con Vite. Habla con la API (los consumos van al backend).
 - **documentacion/** — Enunciado de la prueba.
 - **docs/** — Arquitectura y modelo entidad-relación.
-- **docker-compose.yml** — Para levantar MySQL + backend + front si querés usar Docker.
+- **docker-compose.yml** — Para levantar MySQL + backend + front si quieres usar Docker.
 
 ---
 
@@ -25,19 +25,19 @@ O solo Docker y listo.
 
 ### Con Docker (todo en uno)
 
-Con un solo comando tenés MySQL, backend y frontend. Las tablas y las semillas (medicamentos + usuario nevaEps) las crea el backend al arrancar; no hace falta ejecutar ningún SQL.
+Con un solo comando tienes MySQL, backend y frontend. Las tablas y las semillas (medicamentos + usuario nevaEps) las crea el backend al arrancar; no hace falta ejecutar ningún SQL.
 
 ```bash
 cp .env.example .env
 docker compose up -d --build
 ```
 
-Entrás a:
+Entras a:
 - **Front:** http://localhost:3000
 - **API (Swagger):** http://localhost:8000/docs
 - **MySQL:** localhost:3308 (usuario `eps`, pass `12345678`) — puerto 3308 para no chocar con MySQL/MariaDB en el host
 
-Si en algún momento la base quedó rara o querés empezar de cero, bajá los contenedores y el volumen y volvé a subir:
+Si en algún momento la base quedó rara o quieres empezar de cero, baja los contenedores y el volumen y vuelve a subir:
 
 ```bash
 docker compose down -v
@@ -48,7 +48,7 @@ docker compose up -d --build
 
 **1. MySQL**
 
-Creá la base y el usuario. Como root de MySQL:
+Crea la base y el usuario. Como root de MySQL:
 
 ```bash
 sudo mysql < backend/scripts/init_db.sql
@@ -58,7 +58,7 @@ sudo mysql < backend/scripts/init_db.sql
 
 Si solo creaste la base vacía, no pasa nada: al arrancar el backend se crean las tablas y se cargan las semillas solas (medicamentos de ejemplo + usuario `nevaEps@eps.local` / `12345678`).
 
-En la raíz del repo (o en `backend/`) tené un `.env` (podés copiar de `.env.example`) con algo así:
+En la raíz del repo (o en `backend/`) ten un `.env` (puedes copiar de `.env.example`) con algo así:
 
 ```env
 DB_USER=eps
@@ -92,7 +92,7 @@ npm run dev
 
 (O `npm run build` y `npm run preview` si `npm run dev` te da el error de “too many open files”.)
 
-El front corre en http://localhost:3000 y el proxy apunta las llamadas `/api` al backend. La URL del backend en dev se configura con `VITE_PROXY_TARGET` en el `.env` del frontend (por defecto `http://localhost:8000`). Copiá `frontend/.env.example` a `frontend/.env` si querés cambiarla.
+El front corre en http://localhost:3000 y el proxy apunta las llamadas `/api` al backend. La URL del backend en dev se configura con `VITE_PROXY_TARGET` en el `.env` del frontend (por defecto `http://localhost:8000`). Copia `frontend/.env.example` a `frontend/.env` si quieres cambiarla.
 
 ---
 
@@ -103,7 +103,7 @@ La API está documentada con **Swagger UI**. Con el backend levantado:
 - **Swagger (interfaz para probar):** http://localhost:8000/docs  
 - **ReDoc (solo lectura):** http://localhost:8000/redoc  
 
-Ahí ves todos los endpoints, los esquemas de request/response y podés probar las llamadas desde el navegador (login, register, crear solicitud, etc.). Para los endpoints que piden auth, hacé primero POST `/auth/login`, copiá el `access_token` y en Swagger usá el botón “Authorize” y pegá: `Bearer <tu_token>`.
+Ahí ves todos los endpoints, los esquemas de request/response y puedes probar las llamadas desde el navegador (login, register, crear solicitud, etc.). Para los endpoints que piden auth, haz primero POST `/auth/login`, copia el `access_token` y en Swagger usa el botón “Authorize” y pega: `Bearer <tu_token>`.
 
 **Endpoints:**
 
@@ -117,16 +117,16 @@ Ahí ves todos los endpoints, los esquemas de request/response y podés probar l
 
 Los que piden token: en la cabecera `Authorization: Bearer <token>`.
 
-**Solicitudes NO POS:** si el medicamento es NO POS, en el body tenés que mandar sí o sí `numero_orden`, `direccion`, `telefono` y `correo`. Si es POS, esos campos no van.
+**Solicitudes NO POS:** si el medicamento es NO POS, en el body tienes que mandar sí o sí `numero_orden`, `direccion`, `telefono` y `correo`. Si es POS, esos campos no van.
 
 ---
 
 ## Base de datos y semillas
 
-Al arrancar el backend se crean las tablas (si no existen) y se ejecutan las semillas: 5 medicamentos de ejemplo y un usuario inicial. El usuario inicial sale de las variables de entorno `SEED_USER_EMAIL`, `SEED_USER_PASSWORD` y `SEED_USER_NOMBRE` (por defecto: nevaEps@eps.local / 12345678). Si dejás `SEED_USER_EMAIL` vacío, no se crea ningún usuario de semilla. Es idempotente: si ya hay datos, no los vuelve a insertar.
+Al arrancar el backend se crean las tablas (si no existen) y se ejecutan las semillas: 5 medicamentos de ejemplo y un usuario inicial. El usuario inicial sale de las variables de entorno `SEED_USER_EMAIL`, `SEED_USER_PASSWORD` y `SEED_USER_NOMBRE` (por defecto: nevaEps@eps.local / 12345678). Si dejas `SEED_USER_EMAIL` vacío, no se crea ningún usuario de semilla. Es idempotente: si ya hay datos, no los vuelve a insertar.
 
 Tablas: `usuarios`, `medicamentos`, `solicitudes`. Modelo ER en `docs/MODELO_ER.md`.  
-Scripts SQL por si querés hacer todo a mano: `backend/scripts/init_db.sql`, `backend/scripts/crear_tablas.sql`, `backend/scripts/borrar_tablas.sql` (este último para vaciar y probar de nuevo las semillas).
+Scripts SQL por si quieres hacer todo a mano: `backend/scripts/init_db.sql`, `backend/scripts/crear_tablas.sql`, `backend/scripts/borrar_tablas.sql` (este último para vaciar y probar de nuevo las semillas).
 
 ---
 
@@ -140,7 +140,7 @@ Scripts SQL por si querés hacer todo a mano: `backend/scripts/init_db.sql`, `ba
 
 **Frontend** (en `frontend/.env`, opcional): `VITE_PROXY_TARGET` — URL del backend para el proxy en desarrollo (por defecto `http://localhost:8000`). `VITE_API_URL` — base URL de la API en el cliente (por defecto `/api`).
 
-Copiá `.env.example` a `.env` (y `frontend/.env.example` a `frontend/.env` si usás el front en local) y ajustá los valores.
+Copia `.env.example` a `.env` (y `frontend/.env.example` a `frontend/.env` si usas el front en local) y ajusta los valores.
 
 ## Seguridad
 

@@ -1,6 +1,6 @@
 # Arquitectura del proyecto
 
-El backend está armado en capas (tipo MVC pero para API) y con idea de SOA: auth por un lado, solicitudes por otro. El front es una SPA que solo consume la API.
+El backend está organizado en capas (tipo MVC pero para API) y con idea de SOA: auth por un lado, solicitudes por otro. El front es una SPA que solo consume la API.
 
 ## Cómo está organizado
 
