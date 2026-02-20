@@ -1,0 +1,57 @@
+# Todo en uno: MySQL + backend (FastAPI) + frontend (React).
+# Desde la raíz del repo: docker compose up -d --build
+# Luego: front http://localhost:3000, API/Swagger http://localhost:8000/docs
+# MySQL en 3308 (evita conflicto con MySQL/MariaDB en 3306 del host)
+
+version: "3.8"
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: solicitud-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: solicitud_medicamentos
+      MYSQL_USER: eps
+      MYSQL_PASSWORD: "12345678"
+    ports:
+      - "3308:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build: ./backend
+    container_name: solicitud-backend
+    env_file: .env
+    environment:
+      DB_HOST: mysql
+      DB_USER: eps
+      DB_PASSWORD: "12345678"
+      DB_NAME: solicitud_medicamentos
+    ports:
+      - "8000:8000"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    restart: on-failure
+    # Al arrancar crea tablas y corre semillas (medicamentos + usuario nevaEps)
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        VITE_API_URL: /api
+    container_name: solicitud-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    # Nginx sirve la SPA y hace proxy de /api al backend
+
+volumes:
+  mysql_data:

@@ -1,0 +1,52 @@
+.layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  background: #1a1a2e;
+  color: #eee;
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.header nav {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.header a {
+  color: #ccc;
+  text-decoration: none;
+}
+
+.header a:hover,
+.header a.active {
+  color: #fff;
+}
+
+.logout {
+  background: transparent;
+  border: 1px solid #555;
+  color: #eee;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.logout:hover {
+  background: #333;
+}
+
+.main {
+  flex: 1;
+  padding: 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+  width: 100%;
+}

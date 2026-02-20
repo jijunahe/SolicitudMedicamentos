@@ -1,0 +1,79 @@
+.wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  padding: 2rem;
+  width: 100%;
+  max-width: 380px;
+}
+
+.card h1 {
+  margin: 0 0 1.5rem;
+  font-size: 1.5rem;
+}
+
+.card label {
+  display: block;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.card input {
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  margin-top: 0.3rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.card button {
+  width: 100%;
+  padding: 0.75rem;
+  margin-top: 0.5rem;
+  background: #1a1a2e;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.card button:hover:not(:disabled) {
+  background: #16213e;
+}
+
+.card button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.error {
+  background: #fee;
+  color: #c00;
+  padding: 0.6rem;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+.footer {
+  margin-top: 1.5rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.footer a {
+  color: #1a1a2e;
+  font-weight: 600;
+}
